@@ -40,6 +40,7 @@ See the complete release history in [CHANGELOG.md](CHANGELOG.md).
 git clone <your-repo-url>
 cd youtube-with-automatic
 npm install
+npx playwright install chromium
 npm run walkthrough
 npm start
 ```
@@ -47,6 +48,23 @@ npm start
 Open `http://localhost:3456`. The walkthrough explains each provider choice, tests credentials, and guides YouTube authorization.
 
 Already know what you are doing? `npm run setup` offers a shorter classic flow, and `.env.example` documents every setting.
+
+The `npx playwright install chromium` step is required for the free **local slideshow** video path (no paid video provider needed) — without it, video generation falls through to a simulated placeholder that cannot be approved or published. Skip it only if you already have a paid video provider configured. The startup **Capability check** reports whether Chromium is installed.
+
+### Windows quick start
+
+Run these in **PowerShell**:
+
+```powershell
+git clone <your-repo-url>
+cd youtube-with-automatic
+npm install
+npx playwright install chromium
+npm run walkthrough
+npm start
+```
+
+Prerequisites: [Node.js 18+](https://nodejs.org/) and [Git](https://git-scm.com/download/win). `npm install` also fetches a bundled FFmpeg binary automatically — no separate install needed. If PowerShell blocks the npm-generated scripts with an execution-policy error, run `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` once and re-open the terminal.
 
 ### Verify production readiness
 

@@ -174,6 +174,7 @@ class YouTubeAutomationAgent {
 
   async logCapabilitySummary() {
     const { checkFFmpeg, ffmpegInstallHint } = require('./utils/ffmpeg');
+    const { checkChromium, chromiumInstallHint } = require('./utils/browser');
     const creds = this.credentials.credentials || {};
 
     const hasText = this.credentials.hasAITextProvider();
@@ -186,6 +187,7 @@ class YouTubeAutomationAgent {
       hasGemini
     );
     const hasFFmpeg = await checkFFmpeg();
+    const hasChromium = await checkChromium();
     const hasUpload = Boolean(creds.youtube && this.credentials.tokens?.youtube);
 
     const capabilities = [
@@ -193,6 +195,7 @@ class YouTubeAutomationAgent {
       { name: 'Image generation (visuals/thumbnails)', ok: hasImages, hint: 'requires an OpenAI or Gemini API key — otherwise gradient slides are used' },
       { name: 'Voice narration (TTS)', ok: hasTTS, hint: 'configure OpenAI, Gemini, ElevenLabs, or Azure Speech — otherwise videos are silent' },
       { name: 'Video assembly (FFmpeg)', ok: hasFFmpeg, hint: ffmpegInstallHint() },
+      { name: 'Local slideshow video (Chromium)', ok: hasChromium, hint: chromiumInstallHint() },
       { name: 'YouTube upload', ok: hasUpload, hint: 'run: npm run credentials:setup' }
     ];
 
@@ -208,8 +211,11 @@ class YouTubeAutomationAgent {
     if (!hasFFmpeg) {
       this.logger.warn('FFmpeg is missing: no .mp4 files can be produced until it is installed.');
     }
+    if (!hasChromium) {
+      this.logger.warn('Chromium is missing: the local slideshow fallback will fail and video generation may end up simulated (not approvable) without a paid video provider.');
+    }
     console.log('');
-    return { hasText, hasImages, hasTTS, hasFFmpeg, hasUpload };
+    return { hasText, hasImages, hasTTS, hasFFmpeg, hasChromium, hasUpload };
   }
 
   requireAPIKey() {

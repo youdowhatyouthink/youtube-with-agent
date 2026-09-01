@@ -1676,7 +1676,16 @@ class SystemTest {
       let uploadRequest;
       const publishing = new PublishingSchedulingAgent(db, {});
       publishing.youtube = {
-        videos: { insert: async request => { uploadRequest = request; return { data: { id: 'provenance-video' } }; } }
+        videos: { insert: async request => {
+          uploadRequest = request;
+          // The real googleapis client reads this stream during the HTTP
+          // upload, which closes its file handle. Mirror that here so an
+          // unconsumed fs.ReadStream doesn't hold video.mp4 open — Windows
+          // (unlike Linux) refuses to delete a file with an open handle,
+          // which broke this test's own temp-directory cleanup.
+          for await (const _chunk of request.media.body) { /* drain */ }
+          return { data: { id: 'provenance-video' } };
+        } }
       };
       await publishing.uploadToYouTube({
         publishTime: new Date(Date.now() + 86400000).toISOString(),

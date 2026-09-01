@@ -1,6 +1,6 @@
 {
   "name": "youtube-with-automatic",
-  "version": "2.10.0",
+  "version": "3.0.0",
   "description": "YouTube With Automatic is an open-source AI agent that runs a YouTube channel end to end",
   "author": "Anonymous developer — reference: @onemanprophecy",
   "main": "index.js",

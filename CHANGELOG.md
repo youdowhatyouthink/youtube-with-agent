@@ -2,6 +2,18 @@
 
 ## Unreleased
 
+## v3.0.0 — 2026-09-01
+
+Rebranded to YouTube With Automatic (agent identity: Automic), with the underlying pipeline, agents, and dashboard unchanged. Full security and Windows-readiness pass:
+
+- Rebranded the project, dashboard, console output, and generic agent identity throughout; replaced all original-project author/credit references and squashed git history to a single initial commit
+- Split the original project's MIT notice into THIRD-PARTY-NOTICES.md, preserved verbatim, as required by its license
+- Patched 27 of 29 known dependency vulnerabilities (1 critical, 18 high, 8 moderate, 2 low), including major-version updates to sqlite3, node-cron, and sharp; the 2 remaining moderate advisories have no upstream fix available yet
+- Added a startup capability check for Chromium (the local slideshow video path's dependency), with a clear install hint instead of a silent fallback to simulated, unpublishable output
+- Added a Windows quick start to the README
+- Added windows-latest to CI alongside ubuntu-latest, which caught and led to fixes for two Windows-only bugs: a temp-directory cleanup race and a leaked file handle from an unconsumed upload stream in a test
+- Removed superseded internal planning documents for an already-shipped feature
+
 ## v2.10.0 — 2026-08-24
 
 - Added a versioned DarkzSEO discoverability preflight over a shell-free Python stdin/stdout adapter, with explicit unavailable and schema-mismatch states

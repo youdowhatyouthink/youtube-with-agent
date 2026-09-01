@@ -594,7 +594,7 @@ class SystemTest {
       }
     } finally {
       await db.close();
-      await fs.rm(directory, { recursive: true, force: true });
+      await fs.rm(directory, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
     }
 
     this.logger.info('Closed-loop channel learning test completed successfully');
@@ -729,7 +729,7 @@ class SystemTest {
       }
     } finally {
       await db.close();
-      await fs.rm(directory, { recursive: true, force: true });
+      await fs.rm(directory, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
     }
 
     this.logger.info('Controlled Growth Experiments Studio test completed successfully');
@@ -812,7 +812,7 @@ class SystemTest {
       }
     } finally {
       await db.close();
-      await fs.rm(directory, { recursive: true, force: true });
+      await fs.rm(directory, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
     }
 
     this.logger.info('Outcome and ROI Studio test completed successfully');
@@ -936,7 +936,7 @@ class SystemTest {
       }
     } finally {
       await db.close();
-      await fs.rm(directory, { recursive: true, force: true });
+      await fs.rm(directory, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
     }
 
     this.logger.info('Scene-Aware Retention Studio test completed successfully');
@@ -1025,7 +1025,7 @@ class SystemTest {
       }
     } finally {
       await persistenceDb.close();
-      await fs.rm(directory, { recursive: true, force: true });
+      await fs.rm(directory, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
     }
     this.logger.info('Production readiness gate test completed successfully');
   }
@@ -1160,7 +1160,7 @@ class SystemTest {
       }
     } finally {
       await db.close();
-      await fs.rm(directory, { recursive: true, force: true });
+      await fs.rm(directory, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
     }
     this.logger.info('Durable multi-provider video generation test completed successfully');
   }
@@ -1330,7 +1330,7 @@ class SystemTest {
       if (!lockBlocked) throw new Error('Locked scene accepted an edit');
     } finally {
       await db.close();
-      await fs.rm(directory, { recursive: true, force: true });
+      await fs.rm(directory, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
     }
     this.logger.info('Scene Repair Studio test completed successfully');
   }
@@ -1458,7 +1458,7 @@ class SystemTest {
       }
     } finally {
       await db.close();
-      await fs.rm(directory, { recursive: true, force: true });
+      await fs.rm(directory, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
     }
     this.logger.info('Narration reliability and recovery test completed successfully');
   }
@@ -1570,7 +1570,7 @@ class SystemTest {
       }
     } finally {
       await db.close();
-      await fs.rm(directory, { recursive: true, force: true });
+      await fs.rm(directory, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
     }
     this.logger.info('Shorts Repurposing Studio test completed successfully');
   }
@@ -1703,7 +1703,7 @@ class SystemTest {
       if (!emptyWaiverRejected) throw new Error('A claim waiver without a reviewer note was accepted');
     } finally {
       await db.close();
-      await fs.rm(directory, { recursive: true, force: true });
+      await fs.rm(directory, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
     }
 
     this.logger.info('Research and provenance desk test completed successfully');
@@ -1826,7 +1826,7 @@ class SystemTest {
       }
     } finally {
       await db.close();
-      await fs.rm(directory, { recursive: true, force: true });
+      await fs.rm(directory, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
     }
 
     this.logger.info('DarkzSEO discoverability preflight test completed successfully');
@@ -1965,7 +1965,7 @@ class SystemTest {
       }
     } finally {
       await db.close();
-      await fs.rm(directory, { recursive: true, force: true });
+      await fs.rm(directory, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
     }
 
     this.logger.info('Resumable generation checkpoints test completed successfully');
@@ -2451,7 +2451,7 @@ class SystemTest {
           process.env[key] = savedEnv[key];
         }
       }
-      await fs.rm(directory, { recursive: true, force: true }).catch(() => {});
+      await fs.rm(directory, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 }).catch(() => {});
     }
 
     this.logger.info('Gemini media provider selection test completed successfully');
@@ -2550,7 +2550,7 @@ class SystemTest {
       const hybridStats = await fs.stat(hybridPath);
       if (!hybridStats.size) throw new Error('Hybrid provider/still timeline did not produce a video');
     } finally {
-      await fs.rm(dir, { recursive: true, force: true }).catch(() => {});
+      await fs.rm(dir, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 }).catch(() => {});
     }
 
     this.logger.info('Slideshow renderer test completed successfully');

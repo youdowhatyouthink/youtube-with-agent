@@ -872,11 +872,11 @@ class AIVideoGenerator {
 
   async cleanupDirectory(dirPath) {
     try {
-      const files = await fs.readdir(dirPath);
-      for (const file of files) {
-        await fs.unlink(path.join(dirPath, file));
-      }
-      await fs.rmdir(dirPath);
+      // maxRetries/retryDelay absorb the brief window where Windows still
+      // holds a file handle open (e.g. a just-closed write stream) after an
+      // async operation resolves, which otherwise surfaces as a transient
+      // ENOTEMPTY/EBUSY on the recursive removal.
+      await fs.rm(dirPath, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
     } catch (error) {
       this.logger.warn('Cleanup failed:', error.message);
     }

@@ -100,7 +100,7 @@ class ProductionReadinessService {
       await this.db.saveReadinessRun(result);
       return { ...result, stale: false, blockingFailures: result.summary.blockingFailures };
     } finally {
-      await fs.rm(tempDir, { recursive: true, force: true }).catch(() => {});
+      await fs.rm(tempDir, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 }).catch(() => {});
     }
   }
 
